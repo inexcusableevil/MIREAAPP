@@ -1,6 +1,7 @@
-# MIREAAPP
-# MIREAAPP
-# MIREAAPP
-# MIREAAPP
-# MIREAAPP
-# MIREAAPP
+# Мой первый проект
+
+## Проект
+Этот репозиторий является каркасом для будущего веб-приложения.
+
+## Ссылки
+- [Публичная страница на GitHub Pages](https://inexcusableevil.github.io/MIREAAPP/)
