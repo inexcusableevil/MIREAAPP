@@ -1,50 +1,269 @@
-/* БАЗА: читаемость и предсказуемость размеров */
-* { box-sizing: border-box; }
-
-html, body { margin: 0; padding: 0; }
-body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.5; }
-
-/* Формы: размеры, отступы, визуальный порядок */
-label { display: block; margin: 0.5rem 0 0.25rem; }
-input, select, textarea, button {
-    width: 100%;
+/* ===== CSS ПЕРЕМЕННЫЕ (ДИЗАЙН-ТОКЕНЫ) ===== */
+:root {
+    /* Цвета */
+    --color-bg: #fff;
+    --color-fg: #0b0b0b;
+    --color-muted: #666;
+    --color-primary: #0a84ff;
+    --color-danger: #b00020;
+    
+    /* Типографика */
+    --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    
+    /* Отступы */
+    --space-1: 0.25rem;  /* 4px */
+    --space-2: 0.5rem;   /* 8px */
+    --space-3: 1rem;     /* 16px */
+    --space-4: 1.5rem;   /* 24px */
+    --space-5: 2.5rem;   /* 40px */
+    
+    /* Скругления */
+    --radius: 0.75rem;   /* 12px */
+  }
+  
+  /* ===== БАЗОВЫЕ СТИЛИ ===== */
+  * {
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: var(--font-body);
+    line-height: 1.5;
+    color: var(--color-fg);
+    background-color: var(--color-bg);
+  }
+  
+  /* ===== КОНТЕЙНЕР ===== */
+  .container {
+    width: min(100% - 2 * var(--space-4), 1200px);
+    margin-inline: auto;
+    padding-inline: var(--space-3);
+  }
+  
+  /* ===== ШАПКА И НАВИГАЦИЯ (БЭМ) ===== */
+  .site-header {
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-muted);
+    padding-block: var(--space-3);
+  }
+  
+  .site-header__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .site-header__brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+  
+  .site-nav__list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: var(--space-4);
+  }
+  
+  .site-nav__link {
+    color: var(--color-fg);
+    text-decoration: none;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius);
+    transition: background-color 0.2s;
+  }
+  
+  .site-nav__link:hover {
+    background-color: rgba(10, 132, 255, 0.1);
+  }
+  
+  .site-nav__link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  
+  .site-nav__link--active {
+    background-color: var(--color-primary);
+    color: white;
+  }
+  
+  /* ===== ФОРМА И МОДАЛЬНОЕ ОКНО (БЭМ) ===== */
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
     max-width: 480px;
-    padding: .5rem .75rem;
-    border: 1px solid #c8c8c8;
-    border-radius: 8px;
-    background: #fff;
-}
-
-/* Кнопка по умолчанию */
-button, [type="submit"] {
-    background: #0a84ff;
-    color: #fff;
+  }
+  
+  .form__label {
+    display: block;
+    margin-bottom: var(--space-1);
+    font-weight: 500;
+  }
+  
+  .form__input,
+  .form__select,
+  .form__textarea {
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-muted);
+    border-radius: var(--radius);
+    font: inherit;
+  }
+  
+  .form__input:focus,
+  .form__select:focus,
+  .form__textarea:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  
+  .form__input[aria-invalid="true"] {
+    border-color: var(--color-danger);
+  }
+  
+  .form__actions {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+  
+  .button {
+    padding: var(--space-2) var(--space-4);
     border: none;
+    border-radius: var(--radius);
+    font: inherit;
     cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .button--primary {
+    background-color: var(--color-primary);
+    color: white;
+  }
+  
+  .button--primary:hover {
+    filter: brightness(0.95);
+  }
+  
+  .button--primary:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  
+  /* Модальное окно */
+  .dialog {
+    padding: var(--space-4);
+    border: none;
+    border-radius: var(--radius);
+    width: min(90vw, 500px);
+  }
+  
+  .dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  /* ===== СЕКЦИИ ===== */
+  .section {
+    padding-block: var(--space-5);
+  }
+  
+  .section__title {
+    margin: 0 0 var(--space-4) 0;
+    font-size: 2rem;
+  }
+  
+  /* ===== ИЗОБРАЖЕНИЯ И МЕДИА ===== */
+  .responsive-image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+  }
+  
+  .hero-section {
+    background: 
+      linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
+      url('img/hero-bg.jpg') center/cover no-repeat;
+    color: white;
+    padding: clamp(2rem, 6vw, 6rem) var(--space-3);
+    border-radius: var(--radius);
+    margin-block: var(--space-4);
+  }
+  
+  .media-container {
+    aspect-ratio: 16 / 9;
+    width: min(100%, 800px);
+    margin-inline: auto;
+  }
+  
+  .media-container video,
+  .media-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: var(--radius);
+  }
+  
+  /* ===== ХЛЕБНЫЕ КРОШКИ ===== */
+  .breadcrumbs {
+    margin-bottom: var(--space-4);
+  }
+  
+  .breadcrumbs__list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    gap: var(--space-2);
+  }
+  
+  .breadcrumbs__link {
+    color: var(--color-muted);
+    text-decoration: none;
+  }
+  
+  .breadcrumbs__link:hover {
+    color: var(--color-primary);
+  }
+  
+  /* ===== ПЛАВНАЯ ПРОКРУТКА ===== */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  :target {
+    scroll-margin-top: 2rem;
+  }
+  /* Дополнительные стили для модального окна по БЭМ */
+.dialog__content {
+    padding: var(--space-4);
 }
 
-/* Состояния: клавиатура/мышь/ошибки */
-:where(input, select, textarea, button):focus-visible {
-    outline: 2px solid #0a84ff; outline-offset: 2px;
+.dialog__title {
+    margin: 0 0 var(--space-4) 0;
+    font-size: 1.5rem;
 }
-button:hover { filter: brightness(0.95); }
-:disabled, [aria-disabled="true"] { opacity: .6; cursor: not-allowed; }
 
-/* Подсветка ошибочных полей */
-[aria-invalid="true"] { border-color: #b00020; }
+.form__group {
+    margin-bottom: var(--space-3);
+}
 
-/* СТИЛИ ДЛЯ МОДАЛЬНОГО ОКНА */
-dialog { 
-    padding: 1.25rem; 
-    border: none; 
-    border-radius: 12px; 
-    width: min(92vw, 520px);
+.form__help {
+    display: block;
+    margin-top: var(--space-1);
+    color: var(--color-muted);
+    font-size: 0.875rem;
 }
-dialog::backdrop { 
-    background: rgba(0,0,0,.5); 
-}
-.form-actions { 
-    display: flex; 
-    gap: .5rem; 
-    margin-top: 1rem; 
+
+.form__actions {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
 }
