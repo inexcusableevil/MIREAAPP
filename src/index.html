@@ -1,56 +1,80 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная - Название вашего сайта</title>
-    <meta name="description" content="Краткое описание главной страницы вашего сайта">
+    <title>Главная - КРУТОЙ САЙТ</title>
+    <meta name="description" content="На этом сайте вы увидите жесткие хайлайты и мувики по майнкрафту">
     <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../styles/style.css">
+    <script src="../main/main.js" defer></script>
 </head>
 <body>
-    <!-- Шапка сайта -->
-    <header>
-        <a href="/">Логотип или название сайта</a>
-        <!-- Главное меню навигации -->
-        <nav>
-            <ul>
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="about.html">О нас</a></li>
-                <li><a href="contacts.html">Контакты</a></li>
+    <header class="site-header">
+        <a class="site-header__brand" href="/">КРУТОЙ САЙТ</a>
+        <nav class="site-nav" aria-label="Основная навигация">
+            <ul class="site-nav__list">
+                <li class="site-nav__item"><a class="site-nav__link" href="index.html">Главная</a></li>
+                <li class="site-nav__item"><a class="site-nav__link" href="about.html">О нас</a></li>
+                <li class="site-nav__item"><a class="site-nav__link site-nav__link--cta" href="contacts.html">Связаться</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Уникальное основное содержимое страницы -->
     <main>
         <h1>Добро пожаловать на наш сайт!</h1>
 
-        <!-- Секция 1 с якорем -->
         <section id="services">
             <h2>Наши услуги</h2>
-            <p>Описание предоставляемых услуг...</p>
-            <a href="#contacts">Связаться с нами</a> <!-- Якорная ссылка внутри страницы -->
+            <p>Мы предоставляем большое количество ярких моментов из игры МАЙНКРАФТ</p>
+            <a href="contacts.html">Связаться с нами</a>
         </section>
 
-        <!-- Секция 2 с якорем -->
         <section id="portfolio">
-            <h2>Портфолио</h2>
-            <p>Примеры наших работ...</p>
+            <h2>Примеры того, что вы можете увидеть на сайте</h2>
+            <img
+                src="https://via.placeholder.com/640x360"
+                srcset="https://via.placeholder.com/640x360 640w, 
+                        https://via.placeholder.com/960x540 960w, 
+                        https://via.placeholder.com/1280x720 1280w"
+                sizes="(max-width: 700px) 92vw, (max-width: 1200px) 640px, 960px"
+                alt="Пример хайлайта в МАЙНКРАФТ"
+                width="640" height="360"
+                loading="lazy">
+            <div class="media">
+                <iframe src="https://youtu.be/N9-r65zXNMI?si=jVoR8phXZ-a7-86p" 
+                        title="Повтор хайлайта КАРАСЬ ТВ в майнкрафте"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"></iframe>
+            </div>
+            <a href="https://youtu.be/N9-r65zXNMI?si=jVoR8phXZ-a7-86p">Повтор хайлайта КАРАСЬ ТВ в майнкрафте</a>
         </section>
 
-        <!-- Секция 3 с якорем -->
         <section id="contacts">
             <h2>Контактная информация</h2>
-            <p>Наши контакты...</p>
-            <a href="contacts.html">Подробнее</a> <!-- Ссылка на отдельную страницу -->
+            <a href="contacts.html">Наши контакты</a>
         </section>
     </main>
-
-    <!-- Подвал сайта -->
     <footer>
-        <p>&copy; 2023 Название вашего сайта. Все права защищены.</p>
+        <p>&copy; 2025 КРУТОЙ САЙТ. Все права защищены.</p>
         <p>Телефон: +7 (123) 456-78-90</p>
     </footer>
+    <button class="theme-toggle" type="button" aria-pressed="false">Тема</button>
+    <script defer>
+    const KEY='theme', btn=document.querySelector('.theme-toggle');
+    const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+    // Автовыбор: системная тема или сохранённый выбор пользователя
+    if(localStorage.getItem(KEY)==='dark' || (!localStorage.getItem(KEY) &&
+    prefersDark)){
+    document.body.classList.add('theme-dark');
+    btn?.setAttribute('aria-pressed','true');
+    }
+    // Переключение по кнопке с сохранением в localStorage
+    btn?.addEventListener('click', ()=>{
+    const isDark=document.body.classList.toggle('theme-dark');
+    btn.setAttribute('aria-pressed', String(isDark));
+    localStorage.setItem(KEY, isDark ? 'dark' : 'light');
+    });
+    </script>
 </body>
 </html>
