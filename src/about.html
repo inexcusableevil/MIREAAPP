@@ -1,66 +1,64 @@
+<!-- about.html -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>О нас - Название вашего сайта</title>
+    <title>О нас - Крутой Сайт</title>
     <meta name="description" content="Узнайте больше о нашей компании и истории">
-    <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
+    <script src="main.js" defer></script>
 </head>
 <body>
-    <!-- Шапка сайта по БЭМ -->
     <header class="site-header">
-        <div class="container site-header__container">
-            <a href="index.html" class="site-header__brand">Логотип или название сайта</a>
-            <!-- Главное меню навигации -->
-            <nav class="site-nav" aria-label="Основная навигация">
-                <ul class="site-nav__list">
-                    <li class="site-nav__item">
-                        <a href="index.html" class="site-nav__link">Главная</a>
-                    </li>
-                    <li class="site-nav__item">
-                        <a href="about.html" class="site-nav__link site-nav__link--active">О нас</a>
-                    </li>
-                    <li class="site-nav__item">
-                        <a href="contacts.html" class="site-nav__link">Контакты</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <a class="site-header__brand" href="/">Крутой Сайт</a>
+        <nav class="site-nav" aria-label="Основная навигация">
+            <ul class="site-nav__list">
+                <li class="site-nav__item"><a class="site-nav__link" href="index.html">Главная</a></li>
+                <li class="site-nav__item"><a class="site-nav__link" href="about.html">О нас</a></li>
+                <li class="site-nav__item"><a class="site-nav__link site-nav__link--cta" href="contacts.html">Связаться</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <main class="container">
-        <!-- "Хлебные крошки" по БЭМ -->
+    <main>
         <nav class="breadcrumbs" aria-label="Хлебные крошки">
-            <ul class="breadcrumbs__list">
-                <li class="breadcrumbs__item">
-                    <a href="index.html" class="breadcrumbs__link">Главная</a>
-                </li>
-                <li class="breadcrumbs__item">
-                    <span class="breadcrumbs__current">О нас</span>
-                </li>
-            </ul>
+            <a href="index.html">Главная</a> →
+            <span>О нас</span>
         </nav>
 
         <h1>О нашей компании</h1>
-        
-        <section class="section">
+        <section>
             <h2>Наша история</h2>
-            <p>Текст о том, как все начиналось...</p>
+            <p>Сайт был основан 1 сентября 2025 года. Все произошло на паре по фронтенд и бэкенд разработке.</p>
         </section>
-        
-        <section class="section">
+        <section>
             <h2>Наша команда</h2>
-            <p>Текст о команде...</p>
+            <p>Создатель: Тараканов Леонид Валентинович</p>
+            <p>Работник месяца: Никита Скибобович</p>
         </section>
     </main>
-
     <footer>
-        <p>&copy; 2023 Название вашего сайта. Все права защищены.</p>
+        <p>&copy; 2025 СУПЕР ПУПЕР САЙТ. Все права защищены.</p>
         <p>Телефон: +7 (123) 456-78-90</p>
     </footer>
-
-    <script src="main.js" defer></script>
+    <button class="theme-toggle" type="button" aria-pressed="false">Тема</button>
+    <script defer>
+    const KEY='theme', btn=document.querySelector('.theme-toggle');
+    const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+    // Автовыбор: системная тема или сохранённый выбор пользователя
+    if(localStorage.getItem(KEY)==='dark' || (!localStorage.getItem(KEY) &&
+    prefersDark)){
+    document.body.classList.add('theme-dark');
+    btn?.setAttribute('aria-pressed','true');
+    }
+    // Переключение по кнопке с сохранением в localStorage
+    btn?.addEventListener('click', ()=>{
+    const isDark=document.body.classList.toggle('theme-dark');
+    btn.setAttribute('aria-pressed', String(isDark));
+    localStorage.setItem(KEY, isDark ? 'dark' : 'light');
+    });
+    </script>
 </body>
 </html>
